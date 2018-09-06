@@ -1,0 +1,27 @@
+--- ./tests/mapper.c	2017-11-28 03:50:48.933015000 +0000
++++ ./tests/mapper.c	2017-11-28 03:55:43.948822000 +0000
+@@ -51,13 +51,23 @@
+   printf ("Starting mmap test...\n");
+   for (n = 0; n < 30000; ++n)
+     {
++#if defined(__FreeBSD__)
+       if (mmap (NULL, 1, (n & 1) ? PROT_READ : PROT_WRITE,
+-		MAP_PRIVATE | MAP_ANONYMOUS | MAP_NORESERVE,
++		MAP_PRIVATE | MAP_ANONYMOUS | MAP_RESERVED0040,
+ 		-1, 0) == MAP_FAILED)
+ 	{
+ 	  printf ("Failed after %ld successful maps\n", n - 1);
+ 	  exit (0);
+ 	}
++#else
++      if (mmap (NULL, 1, (n & 1) ? PROT_READ : PROT_WRITE,
++		MAP_PRIVATE | MAP_ANONYMOUS | MAP_NORESERVE,
++		-1, 0) == MAP_FAILED)
++      {
++        printf ("Failed after %ld successful maps\n", n - 1);
++	exit(0);
++      }
++#endif
+     }
+ 
+   alarm (80);	/* die if we don't finish in 80 seconds */
