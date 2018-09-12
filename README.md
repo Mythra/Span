@@ -1,5 +1,7 @@
 # Span #
 
+[![Build Status](https://dev.azure.com/ecoan/ecoan/_apis/build/status/SecurityInsanity.Span)](https://dev.azure.com/ecoan/ecoan/_build/latest?definitionId=2)
+
 Span is a port of [Mordor](https://github.com/mozy/mordor) a high-performance
 IO Library made by mozy. However Span has been updated to the modern era,
 specifically span does not require Boost, and instead opts to use platform
