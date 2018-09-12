@@ -1,13 +1,20 @@
 #ifndef SPAN_SRC_SPAN_IO_STREAMS_BUFFER_HH_
 #define SPAN_SRC_SPAN_IO_STREAMS_BUFFER_HH_
 
-#include <string_view>
 #include <stddef.h>
 
 #include <list>
 #include <memory>
 #include <string>
 #include <vector>
+
+#if __has_include(<string_view>)
+#include <string_view>
+using std::string_view;
+#else
+#include <experimental/string_view>
+using std::experimental::string_view;
+#endif
 
 #include "span/io/Socket.hh"
 
@@ -18,7 +25,7 @@ namespace span {
       public:
         Buffer();
         explicit Buffer(const Buffer *copy);
-        explicit Buffer(const std::string_view string);
+        explicit Buffer(const string_view string);
         Buffer(const void *data, size_t len);
 
         Buffer &operator= (const Buffer *copy);
@@ -42,7 +49,7 @@ namespace span {
         iovec writeBuffer(size_t len, bool reallocate);
 
         void copyIn(const Buffer *buf, size_t len = ~0, size_t pos = 0);
-        void copyIn(const std::string_view string);
+        void copyIn(const string_view string);
         void copyIn(const void *data, size_t len);
 
         void copyOut(Buffer *buffer, size_t len, size_t pos = 0) const {
@@ -51,18 +58,18 @@ namespace span {
         void copyOut(void *buffer, size_t len, size_t pos = 0) const;
 
         ptrdiff_t find(char delimiter, size_t len = ~0) const;
-        ptrdiff_t find(const std::string_view string, size_t len = ~0) const;
+        ptrdiff_t find(const string_view string, size_t len = ~0) const;
 
         std::string to_string() const;
         std::string getDelimited(char delimiter, bool eofIsDelimiter = true, bool includeDelimiter = true);
-        std::string getDelimited(const std::string_view delimiter, bool eofIsDelimiter = true,
+        std::string getDelimited(const string_view delimiter, bool eofIsDelimiter = true,
           bool includeDelimiter = true);
         void visit(std::function<void(const void *, size_t)> dg, size_t len = ~0) const;
 
         bool operator== (const Buffer &rhs) const;
         bool operator!= (const Buffer &rhs) const;
-        bool operator== (const std::string_view str) const;
-        bool operator!= (const std::string_view str) const;
+        bool operator== (const string_view str) const;
+        bool operator!= (const string_view str) const;
 
       private:
         struct SegmentData {
@@ -88,7 +95,7 @@ namespace span {
 
           void *start_;
           size_t len_;
-          std::shared_ptr<unsigned char[]> array_;
+          std::shared_ptr<unsigned char> array_;
         };
 
         struct Segment {
@@ -125,7 +132,7 @@ namespace span {
         std::list<Segment>::iterator writeIt_;
 
         int opCmp(const Buffer *rhs) const;
-        int opCmp(std::string_view string, size_t len) const;
+        int opCmp(string_view string, size_t len) const;
 
         void invariant() const;
       };

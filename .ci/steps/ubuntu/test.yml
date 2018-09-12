@@ -1,0 +1,3 @@
+---
+steps:
+- script: 'CC=clang-7 CXX=clang++-7 ./.ci/run-tests.sh'

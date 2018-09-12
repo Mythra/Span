@@ -1,11 +1,17 @@
 #include "span/io/streams/Stream.hh"
 
-#include <string_view>
-
 #include <cstring>
 #include <memory>
 #include <string>
 #include <vector>
+
+#if __has_include(<string_view>)
+#include <string_view>
+using std::string_view;
+#else
+#include <experimental/string_view>
+using std::experimental::string_view;
+#endif
 
 #include "span/Common.hh"
 #include "span/exceptions/Assert.hh"
@@ -49,7 +55,7 @@ namespace span {
         }
 
         // We have to allocate *another* buff so we don't destroy any data while copying to our buff.
-        std::shared_ptr<unsigned char[]> extraBuff(new unsigned char[result]);
+        std::shared_ptr<unsigned char> extraBuff(new unsigned char[result], std::default_delete<unsigned char[]>());
         internalBuff.copyOut(extraBuff.get(), result);
         memcpy(buff, extraBuff.get(), result);
         return result;
@@ -104,7 +110,7 @@ namespace span {
         throw std::runtime_error("Stream::find default impl should not be reached!");
       }
 
-      ptrdiff_t Stream::find(const std::string_view delimiter, size_t sanitySize, bool throwIfNotFound) {
+      ptrdiff_t Stream::find(const string_view delimiter, size_t sanitySize, bool throwIfNotFound) {
         throw std::runtime_error("Stream::find default impl should not be reached!");
       }
 
@@ -127,7 +133,7 @@ namespace span {
         return result;
       }
 
-      std::string Stream::getDelimited(const std::string_view delim, bool eofIsDelimiter, bool includeDelimiter) {
+      std::string Stream::getDelimited(const string_view delim, bool eofIsDelimiter, bool includeDelimiter) {
         ptrdiff_t offset = find(delim, ~0, !eofIsDelimiter);
         eofIsDelimiter = offset < 0;
 

@@ -36,7 +36,7 @@ namespace span {
 
     struct Address;
 
-    class Socket : std::enable_shared_from_this<Socket> {
+    class Socket : public std::enable_shared_from_this<Socket> {
     public:
       typedef std::shared_ptr<Socket> ptr;
       typedef std::weak_ptr<Socket> weak_ptr;

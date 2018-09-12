@@ -2,7 +2,14 @@
 #define SPAN_SRC_SPAN_IO_STREAMS_FILE_HH_
 
 #include <memory>
+
+#if __has_include(<string_view>)
 #include <string_view>
+using std::string_view;
+#else
+#include <experimental/string_view>
+using std::experimental::string_view;
+#endif
 
 #include "span/Common.hh"
 #include "span/io/IOManager.hh"
@@ -44,7 +51,7 @@ namespace span {
         };
 #endif
 
-        FileStream(const std::string_view path, AccessFlags accessFlags = READWRITE, CreateFlags createFlags = OPEN,
+        FileStream(const string_view path, AccessFlags accessFlags = READWRITE, CreateFlags createFlags = OPEN,
           span::io::IOManager *ioManager = NULL, span::fibers::Scheduler *scheduler = NULL) {
           init(path, accessFlags, createFlags, ioManager, scheduler);
         }
@@ -53,16 +60,16 @@ namespace span {
         bool supportsWrite() { return supportsWrite_ && NativeStream::supportsWrite(); }
         bool supportsSeek() { return supportsSeek_ && NativeStream::supportsSeek(); }
 
-        std::string_view path() const { return path_; }
+        string_view path() const { return path_; }
 
       protected:
         FileStream();
-        void init(const std::string_view path, AccessFlags accessFlags = READWRITE, CreateFlags createFlags = OPEN,
+        void init(const string_view path, AccessFlags accessFlags = READWRITE, CreateFlags createFlags = OPEN,
           span::io::IOManager *ioManager = NULL, span::fibers::Scheduler *scheduler = NULL);
 
       private:
         bool supportsRead_, supportsWrite_, supportsSeek_;
-        std::string_view path_;
+        string_view path_;
       };
     }  // namespace streams
   }  // namespace io

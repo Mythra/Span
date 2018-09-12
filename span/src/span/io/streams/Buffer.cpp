@@ -1,11 +1,17 @@
 #include "span/io/streams/Buffer.hh"
 
-#include <string_view>
-
 #include <algorithm>
 #include <list>
 #include <string>
 #include <vector>
+
+#if __has_include(<string_view>)
+#include <string_view>
+using std::string_view;
+#else
+#include <experimental/string_view>
+using std::experimental::string_view;
+#endif
 
 #include "span/Common.hh"
 #include "span/exceptions/Assert.hh"
@@ -19,7 +25,7 @@ namespace span {
       }
 
       Buffer::SegmentData::SegmentData(size_t len) {
-        array_.reset(new unsigned char[len]);
+        array_.reset(new unsigned char[len], std::default_delete<unsigned char[]>());
         start(array_.get());
         this->len(len);
       }
@@ -150,7 +156,7 @@ namespace span {
           copyIn(copy);
       }
 
-      Buffer::Buffer(const std::string_view view) {
+      Buffer::Buffer(const string_view view) {
         readAvailable_ = writeAvailable_ = 0;
         writeIt_ = segments_.end();
         copyIn(view);
@@ -580,7 +586,7 @@ namespace span {
         SPAN_ASSERT(readAvailable() >= len);
       }
 
-      void Buffer::copyIn(const std::string_view view) {
+      void Buffer::copyIn(const string_view view) {
         return copyIn(view.data(), view.size());
       }
 
@@ -648,7 +654,7 @@ namespace span {
         return -1;
       }
 
-      ptrdiff_t Buffer::find(const std::string_view view, size_t len) const {
+      ptrdiff_t Buffer::find(const string_view view, size_t len) const {
         if (len == static_cast<size_t>(~0)) {
           len = readAvailable();
         }
@@ -743,7 +749,7 @@ namespace span {
         return result;
       }
 
-      std::string Buffer::getDelimited(const std::string_view delimiter, bool eofIsDelimiter, bool includeDelimiter) {
+      std::string Buffer::getDelimited(const string_view delimiter, bool eofIsDelimiter, bool includeDelimiter) {
         ptrdiff_t offset = find(delimiter, ~0);
         SPAN_ASSERT(offset >= -1);
         if (offset == -1 && !eofIsDelimiter) {
@@ -797,14 +803,14 @@ namespace span {
         return opCmp(&rhs) != 0;
       }
 
-      bool Buffer::operator== (const std::string_view view) const {
+      bool Buffer::operator== (const string_view view) const {
         if (view.size() != readAvailable()) {
           return false;
         }
         return opCmp(view.data(), view.size()) == 0;
       }
 
-      bool Buffer::operator!= (const std::string_view view) const {
+      bool Buffer::operator!= (const string_view view) const {
         if (view.size() != readAvailable()) {
           return true;
         }
@@ -850,7 +856,7 @@ namespace span {
         return lenResult;
       }
 
-      int Buffer::opCmp(std::string_view view, size_t len) const {
+      int Buffer::opCmp(string_view view, size_t len) const {
         size_t offset = 0;
         std::list<Segment>::const_iterator it;
         int lenResult = static_cast<int>(static_cast<ptrdiff_t>(readAvailable()) - static_cast<ptrdiff_t>(len));

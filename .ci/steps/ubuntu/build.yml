@@ -1,0 +1,4 @@
+---
+steps:
+- script: './.ci/cpplint.sh'
+- script: 'CC=clang-7 CXX=clang++-7 bazel build //span:span'

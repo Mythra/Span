@@ -1,0 +1,11 @@
+---
+steps:
+- script: 'sudo apt-get install -y build-essential wget libstdc++6'
+- script: 'wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -'
+- script: 'sudo apt-add-repository "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial main" && sudo apt-add-repository "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-7 main"'
+- script: 'sudo apt-get update'
+- script: 'sudo apt-get install -y libc++-7-dev libc++-7-dev libllvm7 llvm-7 llvm-7-dev clang-7 clang-tools-7 clang-7-doc libclang-common-7-dev libclang-7-dev libclang1-7 clang-format-7 lldb-7 lld-7'
+- script: 'sudo apt-get install -y pkg-config zip g++ zlib1g-dev unzip python openjdk-8-jdk'
+- script: 'echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list'
+- script: 'curl https://bazel.build/bazel-release.pub.gpg | sudo apt-key add -'
+- script: 'sudo apt-get update && sudo apt-get install bazel'

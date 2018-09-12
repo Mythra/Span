@@ -2,10 +2,17 @@
 #define SPAN_SRC_SPAN_IO_STREAMS_STREAM_HH_
 
 #include <stddef.h>
-#include <string_view>
 
 #include <memory>
 #include <string>
+
+#if __has_include(<string_view>)
+#include <string_view>
+using std::string_view;
+#else
+#include <experimental/string_view>
+using std::experimental::string_view;
+#endif
 
 #include "span/Common.hh"
 #include "span/third_party/slimsig/slimsig.hh"
@@ -68,10 +75,10 @@ namespace span {
         virtual void flush(bool flushParent = true) {}
 
         virtual ptrdiff_t find(char delimiter, size_t sanitySize = ~0, bool throwIfNotFound = true);
-        virtual ptrdiff_t find(const std::string_view, size_t sanitySize = ~0, bool throwIfNotFound = true);
+        virtual ptrdiff_t find(const string_view, size_t sanitySize = ~0, bool throwIfNotFound = true);
 
         std::string getDelimited(char delimiter = '\n', bool eofIsDelimiter = false, bool includeDelimiter = true);
-        std::string getDelimited(const std::string_view delimiter, bool eofIsDelimiter = false,
+        std::string getDelimited(const string_view delimiter, bool eofIsDelimiter = false,
           bool includeDelimiter = true);
 
         virtual void unread(const Buffer *buffer, size_t length);

@@ -1,6 +1,12 @@
 #include "span/io/streams/File.hh"
 
+#if __has_include(<string_view>)
 #include <string_view>
+using std::string_view;
+#else
+#include <experimental/string_view>
+using std::experimental::string_view;
+#endif
 
 #include "span/Common.hh"
 #include "span/exceptions/Assert.hh"
@@ -16,7 +22,7 @@ namespace span {
       FileStream::FileStream() : supportsRead_(false), supportsWrite_(false), supportsSeek_(false) {
       }
 
-      void FileStream::init(const std::string_view path, AccessFlags accessFlags, CreateFlags createFlags,
+      void FileStream::init(const string_view path, AccessFlags accessFlags, CreateFlags createFlags,
         span::io::IOManager *ioManager, span::fibers::Scheduler *scheduler) {
         NativeHandle handle;
 
