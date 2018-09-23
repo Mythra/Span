@@ -1,26 +1,31 @@
 # Pragmatically define C++ Deps.
 def cxx_workspace():
   native.http_archive(
-    name = "com_google_absl",
-    url = "https://github.com/abseil/abseil-cpp/archive/28080f5f050c9530aa9f2b39c60d8217038d64ff.zip",
-    strip_prefix = "abseil-cpp-28080f5f050c9530aa9f2b39c60d8217038d64ff",
-    sha256 = "74a398798667f99942907ef324200f39b52e250749f79ca5467a1c711b7e95d0"
+    name         = "com_google_absl",
+    strip_prefix = "abseil-cpp-master",
+    url          = "https://github.com/abseil/abseil-cpp/archive/master.zip"
   )
 
   native.http_archive(
-     name = "com_google_googletest",
-     urls = ["https://github.com/google/googletest/archive/master.zip"],
+     name         = "com_google_googletest",
      strip_prefix = "googletest-master",
+     url          = "https://github.com/google/googletest/archive/master.zip"
   )
 
   native.http_archive(
-    name = "com_googlesource_code_cctz",
-    urls = ["https://github.com/google/cctz/archive/master.zip"],
-    strip_prefix = "cctz-master",
+    name         = "com_github_gflags_gflags",
+    strip_prefix = "gflags-master",
+    url          = "https://github.com/gflags/gflags/archive/master.zip",
   )
 
-  native.git_repository(
-    name = "boringssl",
-    commit = "1c91287e05463520c75877af46b665880d11ab63",
-    remote = "https://boringssl.googlesource.com/boringssl",
+  native.http_archive(
+    name         = "com_github_glog_glog",
+    strip_prefix = "glog-master",
+    url          = "https://github.com/google/glog/archive/master.zip",
+  )
+
+  native.http_archive(
+    name         = "boringssl",
+    url          = "https://boringssl.googlesource.com/boringssl/+archive/master-with-bazel.tar.gz",
+    type         = "tar.gz"
   )

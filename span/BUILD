@@ -11,11 +11,10 @@ cc_library(
     "src/**/*.hh",
   ]),
   deps = [
-    "@com_google_absl//absl/synchronization",
     "@boringssl//:ssl",
-    "//tools/cpp/glog:glog-cxx",
-    "//tools/cpp/gflags:gflags-cxx",
-    "//tools/cpp/libunwind:libunwind-cxx",
+    "@com_google_absl//absl/synchronization",
+    "@com_github_gflags_gflags//:gflags",
+    "@com_github_glog_glog//:glog"
   ],
   copts = [
     "-std=c++17",
