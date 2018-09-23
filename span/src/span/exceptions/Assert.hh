@@ -13,6 +13,10 @@ namespace span {
     ::std::terminate();                       \
   }
 
+#define SPAN_NOT_REACHED(x)                      \
+  LOG(FATAL) << "Reached unreachable area: " #x; \
+  ::std::terminate();
+
 #define SPAN_VERIFY(x) SPAN_ASSERT(x)
 
   }  // namespace exceptions

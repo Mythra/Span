@@ -12,6 +12,7 @@ cc_library(
   ]),
   deps = [
     "@com_google_absl//absl/synchronization",
+    "@boringssl//:ssl",
     "//tools/cpp/glog:glog-cxx",
     "//tools/cpp/gflags:gflags-cxx",
     "//tools/cpp/libunwind:libunwind-cxx",
@@ -30,8 +31,7 @@ GenCcTestRules(
   ]),
   deps = [
     ":span",
-    "@com_google_googletest//:gtest_main",
-    "@com_google_absl//absl/synchronization"
+    "@com_google_googletest//:gtest_main"
   ],
 )
 

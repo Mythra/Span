@@ -18,3 +18,9 @@ def cxx_workspace():
     urls = ["https://github.com/google/cctz/archive/master.zip"],
     strip_prefix = "cctz-master",
   )
+
+  native.git_repository(
+    name = "boringssl",
+    commit = "1c91287e05463520c75877af46b665880d11ab63",
+    remote = "https://boringssl.googlesource.com/boringssl",
+  )

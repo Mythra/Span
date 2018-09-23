@@ -28,12 +28,14 @@ support to other operating systems, however these are not there yet.
 
 Span Currently links to the following dependencies in it's build process:
 
+  * [Abseil](https://abseil.io/) - Links to the synchronization part of Abseil
+    for effecient mutexes/scoped mutex locks.
+  * [BoringSSL](https://boringssl.googlesource.com/boringssl/) - Used for
+    TLS/SSL Communications for TLS-Streams.
   * [GLOG](https://github.com/google/glog) - for logging.
   * [GFLAGS](https://github.com/gflags/gflags) - dependency of glog.
   * [LibUnwind](https://www.nongnu.org/libunwind/) - for an efficient setjmp,
     and exceptions.
-  * [Abseil](https://abseil.io/) - Links to the synchronization part of Abseil
-    for effecient mutexes/scoped mutex locks.
 
 It should also be noted we bundle: [Slimsig](https://github.com/ilsken/slimsig)
 as part of our codebase (e.g. doesn't require linking too). The license for
