@@ -34,8 +34,6 @@ Span Currently links to the following dependencies in it's build process:
     TLS/SSL Communications for TLS-Streams.
   * [GLOG](https://github.com/google/glog) - for logging.
   * [GFLAGS](https://github.com/gflags/gflags) - dependency of glog.
-  * [LibUnwind](https://www.nongnu.org/libunwind/) - for an efficient setjmp,
-    and exceptions.
 
 It should also be noted we bundle: [Slimsig](https://github.com/ilsken/slimsig)
 as part of our codebase (e.g. doesn't require linking too). The license for
