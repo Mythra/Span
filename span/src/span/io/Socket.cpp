@@ -979,8 +979,8 @@ namespace span {
     IPv4Address::IPv4Address(unsigned int address, uint16 port) {
       memset(&sin, 0, sizeof(sin));
       sin.sin_family = AF_INET;
-      sin.sin_port = byteswapOnLittleEndian(port);
-      sin.sin_addr.s_addr = byteswapOnLittleEndian(address);
+      sin.sin_port = htons(port);
+      sin.sin_addr.s_addr = htonl(address);
     }
 
 #if PLATFORM != PLATFORM_WIN32
@@ -992,7 +992,7 @@ namespace span {
     IPv4Address::IPv4Address(const char *address, uint16 port) {
       memset(&sin, 0, sizeof(sin));
       sin.sin_family = AF_INET;
-      sin.sin_port = byteswapOnLittleEndian(port);
+      sin.sin_port = htons(port);
       int result = pinet_pton(AF_INET, address, &sin.sin_addr);
       if (result == 0) {
         throw std::invalid_argument("address");
@@ -1011,7 +1011,7 @@ namespace span {
     IPv4Address::ptr IPv4Address::broadcastAddress(unsigned int prefixLen) {
       SPAN_ASSERT(prefixLen <= 32);
       sockaddr_in baddr(sin);
-      baddr.sin_addr.s_addr |= byteswapOnLittleEndian(createMask<unsigned int>(prefixLen));
+      baddr.sin_addr.s_addr |= htonl(createMask<unsigned int>(prefixLen));
       return std::static_pointer_cast<IPv4Address>(Address::create(
         reinterpret_cast<const sockaddr *>(&baddr), sizeof(sockaddr_in)));
     }
@@ -1019,7 +1019,7 @@ namespace span {
     IPv4Address::ptr IPv4Address::networkAddress(unsigned int prefixLen) {
       SPAN_ASSERT(prefixLen <= 32);
       sockaddr_in baddr(sin);
-      baddr.sin_addr.s_addr &= byteswapOnLittleEndian(~createMask<unsigned int>(prefixLen));
+      baddr.sin_addr.s_addr &= htonl(~createMask<unsigned int>(prefixLen));
       return std::static_pointer_cast<IPv4Address>(Address::create(
         reinterpret_cast<const sockaddr *>(&baddr),
         sizeof(sockaddr_in)));
@@ -1030,18 +1030,18 @@ namespace span {
       sockaddr_in subnet;
       memset(&subnet, 0, sizeof(sockaddr_in));
       subnet.sin_family = AF_INET;
-      subnet.sin_addr.s_addr = byteswapOnLittleEndian(~createMask<unsigned int>(prefixLen));
+      subnet.sin_addr.s_addr = htonl(~createMask<unsigned int>(prefixLen));
       return std::static_pointer_cast<IPv4Address>(Address::create(
         reinterpret_cast<const sockaddr *>(&subnet),
         sizeof(sockaddr_in)));
     }
 
     std::ostream & IPv4Address::insert(std::ostream &os) const {
-      int addr = byteswapOnLittleEndian(sin.sin_addr.s_addr);
+      int addr = htonl(sin.sin_addr.s_addr);
       os << ((addr >> 24) & 0xFF) << '.' << ((addr >> 16) & 0xFF) << '.' << ((addr >> 8) & 0xFF) << '.' <<
         (addr & 0xFF);
       if (!os.iword(g_iosPortIndex)) {
-        os << ':' << byteswapOnLittleEndian(sin.sin_port);
+        os << ':' << htons(sin.sin_port);
       }
       return os;
     }
@@ -1060,14 +1060,14 @@ namespace span {
     IPv6Address::IPv6Address(const unsigned char address[16], uint16 port) {
       memset(&sin, 0, sizeof(sockaddr_in6));
       sin.sin6_family = AF_INET6;
-      sin.sin6_port = byteswapOnLittleEndian(port);
+      sin.sin6_port = htons(port);
       memcpy(&sin.sin6_addr.s6_addr, address, 16);
     }
 
     IPv6Address::IPv6Address(const char *address, uint16 port) {
       memset(&sin, 0, sizeof(sockaddr_in6));
       sin.sin6_family = AF_INET6;
-      sin.sin6_port = byteswapOnLittleEndian(port);
+      sin.sin6_port = htons(port);
       int result = pinet_pton(AF_INET6, address, &sin.sin6_addr);
       if (result == 0) {
         throw std::invalid_argument("address");
@@ -1135,7 +1135,7 @@ namespace span {
         if (idx != 0) {
           os << ':';
         }
-        os << static_cast<int>(byteswapOnLittleEndian(addr[idx]));
+        os << static_cast<int>(htons(addr[idx]));
       }
 
       if (!usedZeros && addr[7] == 0) {
@@ -1143,7 +1143,7 @@ namespace span {
       }
 
       if (includePort) {
-        os << "]:" << std::dec << static_cast<int>(byteswapOnLittleEndian(sin.sin6_port));
+        os << "]:" << std::dec << static_cast<int>(htons(sin.sin6_port));
       }
 
       os.setf(flags, std::ios_base::basefield);
