@@ -26,7 +26,7 @@ namespace {
 
   Connection establishConn(span::io::IOManager *ioManager) {
     Connection result;
-    std::vector<span::io::Address::ptr> addresses = span::io::Address::lookup("localhost");
+    std::vector<span::io::Address::ptr> addresses = span::io::Address::lookup("127.0.0.1");
     SPAN_ASSERT(!addresses.empty());
     result.address = std::dynamic_pointer_cast<span::io::IPAddress>(addresses.front());
     result.listen = result.address->createSocket(ioManager, SOCK_STREAM);
