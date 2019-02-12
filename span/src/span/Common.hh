@@ -19,9 +19,6 @@
 #if defined(__WIN32__) || defined(WIN32) || defined(_WIN32)
 #  define PLATFORM PLATFORM_WIN32
 #elif defined(__APPLE_CC__)
-#  define _DARWIN_C_SOURCE 1
-#  define _POSIX_C_SOURCE 201410L
-#  define _XOPEN_SOURCE 600
 #  define PLATFORM PLATFORM_DARWIN
 #include <unistd.h>
 #define POSIX  //
@@ -96,10 +93,14 @@ typedef uint8_t uint8;
 #endif
 
 #if PLATFORM == PLATFORM_DARWIN || UNIX_FLAVOUR == UNIX_FLAVOUR_OSX
-typedef unsigned short u_short;
-typedef unsigned int u_int;
-typedef unsigned long u_long;
+typedef unsigned short u_short;  // NOLINT(runtime/int)
+typedef unsigned int u_int;      // NOLINT(runtime/int)
+typedef unsigned long u_long;    // NOLINT(runtime/int)
 typedef unsigned char u_char;
+
+#define _DARWIN_C_SOURCE 1
+#define _POSIX_C_SOURCE 201410L
+#define _XOPEN_SOURCE 600
 #endif
 
 namespace span {
