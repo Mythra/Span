@@ -9,6 +9,10 @@
 #define error_t errno_t
 #endif
 
+#if PLATFORM == PLATFORM_DARWIN || UNIX_FLAVOUR == UNIX_FLAVOUR_OSX
+typedef int error_t;
+#endif
+
 error_t lastError();
 void lastError(error_t error);
 

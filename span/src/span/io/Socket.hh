@@ -8,6 +8,7 @@
 #include <utility>
 #include <vector>
 
+#include "span/Common.hh"
 #include "span/exceptions/Exception.hh"
 #include "span/third_party/slimsig/slimsig.hh"
 
@@ -24,6 +25,9 @@
 #if PLATFORM == PLATFORM_DARWIN || UNIX_FLAVOUR == UNIX_FLAVOUR_OSX
 #include <netinet/in_systm.h>
 #include <netinet/ip.h>
+#include <sys/socket.h>
+#include <sys/uio.h>
+#include <sys/un.h>
 #endif
 
 namespace span {

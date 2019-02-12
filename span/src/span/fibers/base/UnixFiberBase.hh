@@ -2,18 +2,12 @@
 #define SPAN_SRC_SPAN_FIBERS_BASE_UNIXFIBERBASE_HH_
 
 #include <setjmp.h>
+#include <ucontext.h>
 #ifdef HAVE_VALGRIND
 #include <valgrind/valgrind.h>
 #endif
 
 #include "span/Common.hh"
-
-#if PLATFORM == PLATFORM_DARWIN || UNIX_FLAVOUR == UNIX_FLAVOUR_OSX
-#define _XOPEN_SOURCE
-#include <sys/ucontext.h>
-#else
-#include <ucontext.h>
-#endif
 
 namespace span {
   namespace fibers {

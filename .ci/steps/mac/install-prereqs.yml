@@ -1,0 +1,5 @@
+---
+steps:
+- script: 'brew tap bazelbuild/tap'
+- script: 'brew tap-pin bazelbuild/tap'
+- script: 'brew install bazelbuild/tap/bazel'

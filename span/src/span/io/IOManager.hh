@@ -11,6 +11,8 @@
 #else
 #include "span/io/IOManagerKqueue.hh"
 #endif
+#elif PLATFORM == PLATFORM_DARWIN
+#include "span/io/IOManagerKqueue.hh"
 #endif
 
 #endif  // SPAN_SRC_SPAN_IO_IOMANAGER_HH_

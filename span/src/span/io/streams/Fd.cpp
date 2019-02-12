@@ -205,7 +205,7 @@ namespace span {
       }
 
       int64 FDStream::seek(int64 offset, Anchor anchor) {
-        ::span::fibers::SchedulerSwitcher swither(scheduler_);
+        ::span::fibers::SchedulerSwitcher switcher(scheduler_);
         SPAN_ASSERT(fd_ >= 0);
         int64 pos = lseek(fd_, offset, static_cast<int>(anchor));
         error_t error = lastError();

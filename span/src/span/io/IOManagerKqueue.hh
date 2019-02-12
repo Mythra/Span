@@ -5,7 +5,7 @@
 #include "span/Timer.hh"
 #include "span/fibers/Scheduler.hh"
 
-#if UNIX_FLAVOUR == UNIX_FLAVOUR_BSD
+#if PLATFORM == PLATFORM_DARWIN || UNIX_FLAVOUR == UNIX_FLAVOUR_BSD || UNIX_FLAVOUR == UNIX_FLAVOUR_OSX
 
 #include <sys/types.h>
 #include <sys/event.h>

@@ -1,6 +1,6 @@
 #include "span/io/IOManagerKqueue.hh"
 
-#if UNIX_FLAVOUR == UNIX_FLAVOUR_BSD
+#if PLATFORM == PLATFORM_DARWIN || UNIX_FLAVOUR == UNIX_FLAVOUR_BSD || UNIX_FLAVOUR == UNIX_FLAVOUR_OSX
 
 #include <exception>
 #include <map>

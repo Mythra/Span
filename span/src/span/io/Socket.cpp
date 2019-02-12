@@ -1,10 +1,12 @@
 #include "span/io/Socket.hh"
 
+#include "glog/logging.h"
 #include "span/Common.hh"
 #include "span/exceptions/Assert.hh"
 #include "span/fibers/Fiber.hh"
-#include "glog/logging.h"
 #include "span/io/IOManager.hh"
+#include "span/fibers/Scheduler.hh"
+#include "span/Timer.hh"
 
 #if PLATFORM != PLATFORM_WIN32
 #include <arpa/inet.h>
@@ -13,6 +15,11 @@
 #include <netdb.h>
 
 #define closesocket close
+#endif
+
+#if PLATFORM == PLATFORM_DARWIN || UNIX_FLAVOUR == UNIX_FLAVOUR_OSX
+#include <sys/socket.h>
+#include <sys/types.h>
 #endif
 
 #include <algorithm>
@@ -438,14 +445,13 @@ namespace span {
 
       while (ioManager_ && rc == -1 && error == EAGAIN) {
         ioManager_->registerEvent(sock_, event);
-        Timer::ptr timer;
+        ::span::Timer::ptr timer;
         if (timeout != ~0ull) {
           timer = ioManager_->registerTimer(
             timeout,
             std::bind(&Socket::cancelIo, this, event, &cancelled, ETIMEDOUT));
         }
         ::span::fibers::Scheduler::yieldTo();
-
         if (timer) {
           timer->cancel();
         }

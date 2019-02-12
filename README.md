@@ -2,7 +2,7 @@
 
 | Build Type    | Status                                                                                                                                                           |
 |---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Ubuntu  16.04 | [![Build Status](https://dev.azure.com/ecoan/ecoan/_apis/build/status/SecurityInsanity.Span)](https://dev.azure.com/ecoan/ecoan/_build/latest?definitionId=2) |
+| OSX/Ubuntu | [![Build Status](https://dev.azure.com/ecoan/ecoan/_apis/build/status/SecurityInsanity.Span)](https://dev.azure.com/ecoan/ecoan/_build/latest?definitionId=2) |
 | FreeBSD v11.2 | [![Build Status](https://api.cirrus-ci.com/github/SecurityInsanity/Span.svg?branch=master)](https://cirrus-ci.com/github/SecurityInsanity/Span)                  |
 
 Span is a port of [Mordor](https://github.com/mozy/mordor) a high-performance
@@ -18,13 +18,12 @@ Actively tested, and supported OS's are:
 
   * Ubuntu 16.04, and greater
   * FreeBSD v11.2
+  * Mac OS X v10.13 and greater
+    NOTE: ucontext is not available on WatchOS/TvOS, and as such Span is not supported.
 
 Other Operating Systems that aren't supported yet, but are supported in the
 original Mordor are:
 
-  * Mac-OS X/iOS Support: Was dropped due to Mac-OS X removing a core posix header
-    that is no longer possible to use in recent versions. A workaround will
-    need to be used.
   * Windows Support: Completely dropped to start, but plan on implementing
     again. Originally I didn't have a strong windows machine to test builds
     on, that has since changed so just need to schedule time to do it.
