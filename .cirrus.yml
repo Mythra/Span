@@ -1,0 +1,9 @@
+---
+freebsd_instance:
+  image: freebsd-11-2-release-amd64
+
+unittest_task:
+  test_script:
+    - sudo pkg install -f -y bash bazel
+    - bazel build //span:span
+    - /usr/local/bin/bash -c "./.ci/run-tests.sh"

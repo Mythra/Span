@@ -43,6 +43,10 @@ def GenCcTestRules(
       copts = [
         "-std=c++17",
       ],
+      linkopts = [
+        "-lm",
+        "-lpthread"
+      ],
       visibility = visibility
     )
 

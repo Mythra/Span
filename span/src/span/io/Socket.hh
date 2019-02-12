@@ -8,7 +8,6 @@
 #include <utility>
 #include <vector>
 
-#include "span/compat/Endian.hh"
 #include "span/exceptions/Exception.hh"
 #include "span/third_party/slimsig/slimsig.hh"
 
@@ -191,8 +190,8 @@ namespace span {
         ptr subnetMask(unsigned int prefixLen) { return IPv4Address::createSubnetMask(prefixLen); }
         static ptr createSubnetMask(unsigned int prefixLen);
 
-        uint16 port() const { return byteswapOnLittleEndian(sin.sin_port); }
-        void port(uint16 p) { sin.sin_port = byteswapOnLittleEndian(p); }
+        uint16 port() const { return htons(sin.sin_port); }
+        void port(uint16 p) { sin.sin_port = htons(p); }
 
         const sockaddr *name() const { return reinterpret_cast<const sockaddr*>(&sin); }
         sockaddr *name() { return reinterpret_cast<sockaddr*>(&sin); }
@@ -215,8 +214,8 @@ namespace span {
         ptr subnetMask(unsigned int prefixLen) { return createSubnetMask(prefixLen); }
         static ptr createSubnetMask(unsigned int prefixLen);
 
-        uint16 port() const { return byteswapOnLittleEndian(sin.sin6_port); }
-        void port(uint16 p) { sin.sin6_port = byteswapOnLittleEndian(p); }
+        uint16 port() const { return htons(sin.sin6_port); }
+        void port(uint16 p) { sin.sin6_port = htons(p); }
 
         const sockaddr *name() const { return reinterpret_cast<const sockaddr*>(&sin); }
         sockaddr *name() { return reinterpret_cast<sockaddr *>(&sin); }

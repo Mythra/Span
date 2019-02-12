@@ -3,6 +3,12 @@
 
 #include <errno.h>
 
+#include "span/Common.hh"
+
+#if UNIX_FLAVOUR == UNIX_FLAVOUR_BSD
+#define error_t errno_t
+#endif
+
 error_t lastError();
 void lastError(error_t error);
 
