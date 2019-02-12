@@ -1,6 +1,9 @@
 # Span #
 
-[![Build Status](https://dev.azure.com/ecoan/ecoan/_apis/build/status/SecurityInsanity.Span)](https://dev.azure.com/ecoan/ecoan/_build/latest?definitionId=2)
+| Build Type    | Status                                                                                                                                                           |
+|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Ubuntu  16.04 | [![Build Status](https://dev.azure.com/ecoan/ecoan/_apis/build/status/SecurityInsanity.Span)](https://dev.azure.com/ecoan/ecoan/_build/latest?definitionId=2) |
+| FreeBSD v11.2 | [![Build Status](https://api.cirrus-ci.com/github/SecurityInsanity/Span.svg?branch=master)](https://cirrus-ci.com/github/SecurityInsanity/Span)                  |
 
 Span is a port of [Mordor](https://github.com/mozy/mordor) a high-performance
 IO Library made by mozy. However Span has been updated to the modern era,
