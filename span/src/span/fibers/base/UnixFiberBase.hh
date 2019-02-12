@@ -1,13 +1,14 @@
 #ifndef SPAN_SRC_SPAN_FIBERS_BASE_UNIXFIBERBASE_HH_
 #define SPAN_SRC_SPAN_FIBERS_BASE_UNIXFIBERBASE_HH_
 
+#include "span/Common.hh"
+
 #include <setjmp.h>
 #include <ucontext.h>
+
 #ifdef HAVE_VALGRIND
 #include <valgrind/valgrind.h>
 #endif
-
-#include "span/Common.hh"
 
 namespace span {
   namespace fibers {
