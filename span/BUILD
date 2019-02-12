@@ -19,6 +19,10 @@ cc_library(
   copts = [
     "-std=c++17",
   ],
+  linkopts = [
+    "-lm",
+    "-lpthread"
+  ],
   strip_include_prefix = "src/",
 )
 
@@ -42,10 +46,11 @@ cc_binary(
   copts = [
     "-std=c++17",
   ],
+  linkopts = [
+    "-lm",
+    "-lpthread"
+  ],
   deps = [
     ":span",
-  ],
-  linkopts = [
-    "-lpthread",
   ],
 )

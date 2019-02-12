@@ -11,13 +11,15 @@ it includes several performance impacting changes that make it much faster.
 
 ## OS Compatability ##
 
-For this first couple releases span will really only target linux based distros
-such as Ubuntu. One of the first steps this library will take is expanding
-support to other operating systems, however these are not there yet.
+Actively tested, and supported OS's are:
 
-  * BSD-Distro Support: Was last verified on FreeBSD a couple months ago.
-    Should in theory work, however yet to be confirmed.
-  * Mac-OS X Support: Was dropped due to Mac-OS X removing a core posix header
+  * Ubuntu 16.04, and greater
+  * FreeBSD v11.2
+
+Other Operating Systems that aren't supported yet, but are supported in the
+original Mordor are:
+
+  * Mac-OS X/iOS Support: Was dropped due to Mac-OS X removing a core posix header
     that is no longer possible to use in recent versions. A workaround will
     need to be used.
   * Windows Support: Completely dropped to start, but plan on implementing
